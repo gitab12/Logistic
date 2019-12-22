@@ -1,0 +1,125 @@
+/****** The calendar itself ******/
+.DateTimeCalendar {
+  display:none;
+  position:absolute;
+  z-index:9999;
+  background-color: White;
+  text-align: left;
+}
+
+/****** Default styles within the calendar ******/
+.DateTimeCalendar * {
+  margin: 0;
+  padding: 2px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+.DateTimeCalendar a {
+  text-decoration: none;
+  cursor: pointer;
+  color: Black;
+}
+.DateTimeCalendar table {
+  border-collapse: collapse;
+}
+.DateTimeCalendar td {
+  text-align: center;
+}
+
+.DateTimeCalendar table table tr td {
+  border: none;
+}
+
+.DateTimeCalendar > table {
+  width: 165px;
+  border: solid 1px #666;
+}
+
+/****** The month/year selection ******/
+.DateTimeCalendar table.tblMonthYear {
+  width: 165px;
+}
+.DateTimeCalendar table.tblMonthYear td {
+  padding: 2px;
+}
+.DateTimeCalendar table.tblMonthYear input.dt {
+  text-align:center;
+  width:80px;
+}
+
+/****** The days of week: Monday to Friday ******/
+.DateTimeCalendar .trDayOfWeek td {
+  padding: 3px; 
+  border: 1px solid Black;
+  background-color: #AAA;
+  color: Black;
+  font: 13px arial;
+  font-weight: bold;
+}
+.DateTimeCalendar .trDayOfWeek td.weekend {
+  //background-color: #c67979;
+  //color: #8e2020;
+}
+
+/****** The dates: 1st to 31st ******/
+.DateTimeCalendar .trDate td {
+  padding: 3px;
+  background-color: White;
+}
+.DateTimeCalendar .trDate td.weekend {
+  //background-color: #ffdfdf;
+  //color: #8e2020;
+}
+.DateTimeCalendar .trDate td.today {
+  background-color: #f8ff9d;
+}
+.DateTimeCalendar .trDate td.today a {
+  font-weight: bold;
+}
+.DateTimeCalendar .trDate td.selected {
+  background-color: #333;
+}
+.DateTimeCalendar .trDate td.selected a {
+  color: White;
+}
+.DateTimeCalendar .trDate td.today.selected {
+  background-color: #958f24;
+}
+
+/****** The time: Hour and Minute ******/
+.DateTimeCalendar .trTime td {
+  padding: 2px;
+}
+
+.DateTimeCalendar input.dthr {
+  width:20px;
+  text-align:right;
+}
+.DateTimeCalendar .colon {
+}
+.DateTimeCalendar input.dtmi {
+  width:20px;
+  text-align:right;
+}
+.DateTimeCalendar .dtampm {
+  padding-left:3px;
+  display:inline;
+}
+
+/****** Others ******/
+.DateTimeCalendar .dtclose {
+  display: inline;
+  font-size: 9px;
+}
+
+#dterror {
+  display:none;
+  position:absolute;
+  z-index:50;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  background-color: White;
+  border:solid 1px Red;
+  color: Red;
+  padding:3px 5px;
+}

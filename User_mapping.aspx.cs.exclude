@@ -1,0 +1,247 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using System.Data.SqlClient;
+
+
+public partial class User_mapping : System.Web.UI.Page
+{
+    static SqlDataAdapter da;
+    static DataSet ds;
+
+
+    static SqlDataAdapter dap_desg;
+    static DataSet ds_desg;
+    
+    
+    //dbcon connection = new dbcon();
+    SqlCommand cmd;
+    static string data_bind = "";
+    SqlDataReader dr;
+    string constr = ConfigurationManager.ConnectionStrings["BizCon"].ConnectionString;
+    //string page = ConfigurationManager.AppSettings["Title"];
+
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            drp_fill_email();
+            bind_portal();
+            chk_lst_access();
+           
+
+
+
+            
+        }
+    }
+    public void drp_fill_email()
+    {
+
+        try
+        {
+
+            SqlConnection conn = new SqlConnection(constr);
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "select distinct EmailID,FirstName,LastName,DesignationID,Department,Phone,Mobile from bizconnect_userLogDB";
+
+            cmd.Connection = conn;
+
+            conn.Open();
+
+            Drp_email.DataSource = cmd.ExecuteReader();
+
+            Drp_email.DataTextField = "EmailID";
+
+            Drp_email.DataBind();
+
+        }
+
+        catch (Exception ex)
+        {
+
+            Response.Write(ex.StackTrace);
+
+        }
+
+    }
+    //Access
+    public void chk_lst_access()
+    {
+       try
+        {
+
+            SqlConnection conn = new SqlConnection(constr);
+
+            string qry = "select distinct AccessName  from BizConnect_AccessMaster order by AccessName";
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(qry, conn);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "AccessName");
+            conn.Close();
+            ChkLst_access.DataSource = ds.Tables[0];
+            ChkLst_access.DataValueField = ds.Tables[0].Columns["AccessName"].ColumnName.ToString();
+            ChkLst_access.DataBind();
+        }
+
+        catch (Exception ex)
+        {
+
+            Response.Write(ex.StackTrace);
+
+        }
+
+
+
+
+
+
+    
+    }
+
+  
+
+    
+    //End
+
+    
+
+    protected void Drp_email_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        binddata();
+
+    }
+    public void binddata()
+    {
+
+        try
+        {
+
+
+
+            SqlConnection conn = new SqlConnection(constr);
+
+            conn.Open();
+            ds = new DataSet();
+            ds_desg = new DataSet();
+            if (Drp_email.SelectedIndex<=0)
+            {
+                //da = new SqlDataAdapter(data_bind, conn);
+                //Session["binddata"] = data_bind;
+            }
+            else
+            {
+                string data_bind1;
+                string desg_bind; ;
+                data_bind1 = "select distinct EmailID,FirstName,LastName,DesignationID,Department,Phone,Mobile from bizconnect_userLogDB where EmailID='" + Drp_email.SelectedValue + "'";
+                desg_bind = "select distinct Designation  from dbo.BizConnect_DesignationMaster inner join BizConnect_UserLogDB on  BizConnect_DesignationMaster.DesignationID=BizConnect_UserLogDB.DesignationID where BizConnect_UserLogDB.UserID= '" + Drp_email.SelectedIndex + "'";
+                SqlCommand cmd = new SqlCommand(data_bind1, conn);
+                SqlCommand cmd_desg = new SqlCommand(desg_bind, conn);
+                cmd.ExecuteNonQuery();
+                cmd_desg.ExecuteNonQuery();
+                da = new SqlDataAdapter(cmd);
+                dap_desg = new SqlDataAdapter(cmd_desg); 
+                da.Fill(ds);
+                dap_desg.Fill(ds_desg);   
+
+            }
+            string Fname = ds.Tables[0].Rows[0]["FirstName"].ToString();
+            string Lname = ds.Tables[0].Rows[0]["LastName"].ToString();
+            string user=Fname + Lname;
+            lbl_user.Text = user.ToString();
+            lbl_desg.Text = ds_desg.Tables[0].Rows[0]["Designation"].ToString();
+            lbl_dpt.Text = ds.Tables[0].Rows[0]["Department"].ToString();
+            lbl_phone.Text = ds.Tables[0].Rows[0]["Phone"].ToString();
+
+            lbl_mobile.Text =ds.Tables[0].Rows[0]["Mobile"].ToString();
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+
+    }
+
+   //Copy from Old
+    public void bind_portal()
+    {
+
+        try
+        {
+
+
+
+            SqlConnection conn = new SqlConnection(constr);
+
+            conn.Open();
+            ds = new DataSet();
+            ds_desg = new DataSet();
+
+            string data_portal;
+            data_portal = "select ServicePortalName,ServicePortalCategoryName,FeatureName    from BizConnect_ServicePortalFeature  inner join BizConnect_ServicePortalFeatureCategory on  BizConnect_ServicePortalFeatureCategory.ServicePortalID=dbo.BizConnect_ServicePortalFeature.ServicePortalID inner join BizConnect_ServicePortalMaster on BizConnect_ServicePortalMaster.ServicePortalID=dbo.BizConnect_ServicePortalFeature.ServicePortalID group by ServicePortalName,ServicePortalCategoryName,FeatureName";
+
+            SqlCommand cmd = new SqlCommand(data_portal, conn);
+            cmd.ExecuteNonQuery();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            parentRepeater.DataSource = ds;
+            //Repeater child=new Repeater ();
+
+            //child = parentRepeater.FindControl(childRepeater);
+            parentRepeater.DataBind();
+
+
+        }
+
+
+
+        catch (Exception ex)
+        {
+
+        }
+
+
+    }
+    protected void parentRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        Repeater r = (Repeater)e.Item.FindControl("childRepeater");
+
+        r.DataSource = ds;
+
+        r.DataBind();
+         
+
+    }
+
+
+
+    //Data bound for feature category
+
+    protected void parentRepeater_ItemCreated(object sender, RepeaterItemEventArgs e)
+    {
+        Repeater r = (Repeater)e.Item.FindControl("childRepeater");
+        r.ItemDataBound += new RepeaterItemEventHandler(this.childRepeater_ItemDataBound);
+
+    }
+    protected void childRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        Repeater r_child2 = (Repeater)e.Item.FindControl("childRepeater2");
+        r_child2.DataSource = ds;
+        r_child2.DataBind();
+    }
+
+   
+    
+}

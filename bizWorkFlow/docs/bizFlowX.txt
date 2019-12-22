@@ -1,0 +1,37 @@
+Entry Sources
+	1) Client
+	2) AARMSCM Employee
+	3) Aarms Employee connecting to SCM Junction
+	4) Automatically from SCM Junction
+
+Entry Screens - Input Only
+	1) Registration (Client - Customer)
+	2) Home Page (Info:Login Name, Password)
+	3) Info Management
+	4) Single New Trip Plan
+	5.1) Bulk New Trip Plan
+	5.2) Bulk New Trip Plan Format
+	6) AARMS User Opening Screen
+	7) Posting Bids
+
+Entry Screens - In/Out
+	1) Confirmed Quote
+	2) Distance Calculator
+
+Reports - General Information
+	1) Dash Board (Blank)
+	2) Dash Board Client
+	3) My Trip Plan
+	4) Bid Matches Report
+	5) Client Trip Plan
+	6) Dash Board 1st Part
+	7) Dash Board 2nd Part
+	8) Route Prices Received
+	9) Trip Plan Posted
+
+Reports Dialog Box
+	1) Price Chart
+	2) Transporters Report
+	3) Clients Rebid Report
+	4) All Routes Bid Management Report
+	5) Fleet Master Report

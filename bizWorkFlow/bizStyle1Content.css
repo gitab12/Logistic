@@ -1,0 +1,71 @@
+
+/*This is another comment*/
+
+body{
+	background-color:#eaddea;
+	padding:0;
+	margin:10;
+	font-family:times;
+	font-size:15;
+}
+
+h1 {
+	margin:0;
+        color:#888888;
+	font-family:arial;
+        font-size:30;	
+        padding:15px 0px 0px 0px;
+	text-shadow: 1px -1px 0px #999; 
+        /*text-transform:capitalize;
+	text-align:left;*/
+}
+ 
+h2 {
+	margin:0;
+        color:#888888;
+	font-family:arial;
+        font-size:27;
+
+        padding:15px 0px 0px 0px;
+}
+
+h3 {
+	margin:0;
+        color:#888888;
+	font-family:arial;
+        font-size:24;
+
+        padding:15px 0px 0px 0px;
+}
+
+h4 {
+	margin:0;
+        color:#888888;
+	font-family:arial;
+        font-size:21;
+
+        padding:15px 0px 0px 0px;
+}
+
+h5 {
+	margin:0;
+        color:#888888;
+	font-family:arial;
+        font-size:18;
+
+        padding:15px 0px 0px 0px;
+}
+
+h6 {
+	margin:0;
+        color:#888888;
+	font-family:arial;
+        font-size:16;
+
+        padding:15px 0px 0px 0px;
+}
+
+
+p
+{
+}
